@@ -5,8 +5,9 @@ import ProductModel from "@/models/products.model";
 import { NextRequest } from "next/server";
 
 
-interface CloudinaryUploadResult {
+export interface CloudinaryUploadResult {
     public_id:string;
+    secure_url:string;
     [key:string]:any
 };
 
@@ -78,8 +79,11 @@ export async function POST(req: NextRequest) {
           );
           uploadStream.end(buffer);
         });
-
-        return result.secure_url; 
+        const data = {
+          publicId: result.public_id,
+          url: result.secure_url
+        }
+        return data; 
       })
     );
 
@@ -131,28 +135,37 @@ export async function GET(req:NextRequest){
         if(category && price){
             //both
             filter = {
-                $or:[
+              $and:[
+                {$or:[
                     { category: category },
                     { price: { $lte: price } },
                     {tags:category}
-                ]
+                ]},
+              {isDeleted:false}]
+                
             };
         }else if(category && !price){
             //category
             filter = {
-                $or:[
+              $and:[
+                {$or:[
                     { category: category },
                     {tags:category}
+                ]},
+                {isDeleted:false}
                 ]
             };
         }else if(!category && price){
             //prize
             filter = {
-                price: { $lte: price }
+                $and:[
+                  {isDeleted:false},
+                  {price: { $lte: price }}
+                ]
             };
         }else{
             //none
-            filter = {};
+            filter = {isDeleted:false};
         }
 
         const products = await ProductModel.find(filter)

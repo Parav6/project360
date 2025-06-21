@@ -9,6 +9,14 @@ export interface Rating extends Document{
     updatedAt?:Date;
 };
 
+export interface Image extends Document{
+  _id:Types.ObjectId;
+  publicId:string;
+  url:string;
+  createdAt?:Date;
+  updatedAt?:Date;
+};
+
 const ratingSchema = new Schema({
     user:{
         type:Types.ObjectId,
@@ -25,6 +33,15 @@ const ratingSchema = new Schema({
     }
 },{timestamps:true});
 
+const imageSchema = new Schema({
+  publicId:{
+    type:String
+  },
+  url:{
+    type:String
+  }
+},{timestamps:true})
+
 export interface Products extends Document{
     _id:Types.ObjectId;
     name:string;
@@ -34,7 +51,7 @@ export interface Products extends Document{
     stock:number;
     category:string;
     tags?:string[];
-    images:string[];
+    images:Image[];
     isDeleted:boolean;
     ratings:Rating[];
     createdAt?:Date;
@@ -73,12 +90,7 @@ const productSchema = new Schema({
     tags:[
         {type:String}
     ],
-    images:[
-        {
-            type:String,
-            require:true
-        }
-    ],
+    images:[imageSchema],
     isDeleted: {
       type: Boolean,
       default: false,
