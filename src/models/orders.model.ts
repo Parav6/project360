@@ -30,7 +30,7 @@ export interface Order extends Document{
     products:Product[];
     address:Address;
     paymentStatus:"pending" | "paid" | "failed";
-    orderStatus:'placed'| 'processing'| 'shipped'| 'delivered'| 'cancelled';
+    orderStatus:'placed'| 'processing'|  'shipped'| 'delivered'| 'cancelled';
     deliveryAgent:Types.ObjectId;
     totalAmount:number;
     otp:string
@@ -50,7 +50,7 @@ export const orderSchema: Schema<Order> = new Schema({
     },
     orderStatus: {
         type: String,
-        enum: ['placed', 'shipped', 'delivered', 'cancelled'],
+        enum: ['placed', 'processing','shipped', 'delivered', 'cancelled'],
         default: 'placed' 
     },
     deliveryAgent: { 
