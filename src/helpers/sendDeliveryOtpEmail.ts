@@ -1,17 +1,17 @@
 import {resend} from "../lib/resend";
-import { VerificationEmailTemplate} from "../../emails/verificationEmail";
+import { DeliveryEmailTemplate } from "../../emails/deliveryEmail";
 
-export async function sendVerificationEmail(
+export async function sendDeliveryOtpEmail(
     email:string,
     name:string,
-    verifyCode:string
+    otp:string
 ): Promise<void>{
     try {
-        const emailTemplate = await VerificationEmailTemplate({ name, otp: verifyCode });
+        const emailTemplate = await DeliveryEmailTemplate({ name, otp });
         await resend.emails.send({                      //domian problem
         to: email,
         from: 'parav_k@ece.iitr.ac.in',
-        subject: "Mystery message | Verification Code",
+        subject: "Mystery message | Delivery OTP",
         react: emailTemplate
         });
         console.log("email sent successfully")

@@ -13,6 +13,7 @@ export interface Employee extends Document{
     refreshToken:string;
     isVerified:boolean;
     isWorking:boolean;
+    workingFor:Types.ObjectId;
     createdAt?: Date;
     updatedAt?: Date;
 };
@@ -52,6 +53,10 @@ const employeeSchema : Schema<Employee> = new Schema({
     isWorking:{
         type:Boolean,
         default:false
+    },
+    workingFor:{
+        type:Schema.Types.ObjectId,
+        ref:"orders"
     }
 },{timestamps:true});
 
