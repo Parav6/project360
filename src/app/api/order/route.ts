@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 import OrderModel from "@/models/orders.model";
+// import { orderQueue } from "@/lib/queues/orderQueue";
 
 
 export async function POST(req:NextRequest){
@@ -38,6 +39,11 @@ export async function POST(req:NextRequest){
         if(!order){
             return sendError("error in order creation",401)
         };
+
+        //* add work to queue 
+        // const res = await orderQueue.add("assignWorker",{orderId : order._id});
+        // console.log("order added to queue",res.id);
+
         return sendSuccess(order,"order created successfully");
     } catch (error) {
         console.log('unable to create order', error);
@@ -67,6 +73,8 @@ export async function GET(){
         if(!orders){
             return sendError("no orders found",404)
         };
+
+        
         return sendSuccess(orders,"orders found!!!")
     } catch (error) {
         console.log('unable to find order', error);

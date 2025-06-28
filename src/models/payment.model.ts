@@ -12,7 +12,7 @@ export interface Payment extends Document{
 export const paymentSchema : Schema<Payment> = new Schema({
     orderId: {
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Order' 
+        ref: 'orders' 
     },
     razorpayOrderId:{
         type:String,

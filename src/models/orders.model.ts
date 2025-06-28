@@ -39,7 +39,7 @@ export interface Order extends Document{
 export const orderSchema: Schema<Order> = new Schema({
     user: {
         type:Schema.Types.ObjectId,
-        ref: 'User' 
+        ref: 'customers' 
     },
     products:[productSchema],
     address:addressSchema,

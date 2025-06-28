@@ -1,4 +1,4 @@
-import { sendError } from "@/helpers/sendResponse";
+import { sendError, sendSuccess } from "@/helpers/sendResponse";
 import dbConnect from "@/lib/dbConnect";
 import { NextRequest } from "next/server";
 import crypto from "crypto"
@@ -8,6 +8,7 @@ import CartModel from "@/models/cart.model";
 import { cookies } from "next/headers";
 import CustomerModel from "@/models/customer.model";
 import jwt from "jsonwebtoken"
+import { orderQueue } from "@/lib/queues/orderQueue";
 
 
 export async function POST(req:NextRequest){
@@ -73,12 +74,6 @@ export async function POST(req:NextRequest){
             return sendError("unable to update payment log but payment is authentic",403)
         };
 
-        // const freeEmployees = await EmployeeModel.find({isWorking:false});
-        // if(!freeEmployees || freeEmployees.length===0){
-        //     return sendError("no employee is free");
-        // }
-        // const freeEmployeePutToWork = 
-
         const updatedOrder = await OrderModel.findByIdAndUpdate(orderId,{
             paymentStatus:"paid",
             orderStatus:"processing",
@@ -93,7 +88,12 @@ export async function POST(req:NextRequest){
             return sendError("unable to delete cart",403)
         };
 
+        //* add work to queue 
+        const res = await orderQueue.add("assignWorker",{orderId});
+        console.log("order added to queue",res.id);
+
         // redirect to desired page.
+        return sendSuccess(updatedOrder,"order is processing")
         
     } catch (error) {
         console.log("unable to verify payment",error);
