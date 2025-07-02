@@ -129,6 +129,7 @@ export async function GET(req:NextRequest){
         const page = parseInt(searchParams.get("page")||"1");
         const limit = parseInt(searchParams.get("limit") || "20");
 
+        console.log(category, price, page, limit);
       
         let filter = {};
 

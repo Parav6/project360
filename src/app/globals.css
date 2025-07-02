@@ -9,7 +9,7 @@
 
 :root {
   --color-bg: #F2F0EF;
-  --color-secondary: #BBBDGC;
+  --color-secondary: #BBBDBC;
   --color-primary: #245F73;
   --color-accent: #733E24;
   --color-text: #245F73;
@@ -21,6 +21,11 @@ body {
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
   line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
 }
 
 a {

@@ -22,5 +22,5 @@ export const signUpSchema = z.object({
     password: z.string().min(6,{message:"password must be at 6 least characters"}),
     role: z.string(),
     phone: z.string().regex(/^\+[1-9]\d{1,14}$/,"Invalid Number"),
-    addresses: addressValidationSchema,
+    // addresses: addressValidationSchema,
 });

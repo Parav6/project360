@@ -4,11 +4,12 @@ import CustomerModel from "@/models/customer.model";
 import { NextRequest } from "next/server";
 
 
-export async function POST(req:NextRequest){
+export async function POST(req:NextRequest,{params}:{params:{userId:string}}){
     dbConnect();
     try {
-        const {code,name} = await req.json();
-        const user = await CustomerModel.findOne({name});
+        const {code} = await req.json();
+        const {userId} = await params;
+        const user = await CustomerModel.findById(userId);
         if(!user){
             return sendError("user not found", 404);
         };

@@ -13,7 +13,7 @@ export async function PUT(req:NextRequest){
     dbConnect();
     try {
         const cookieStore = cookies();
-        const {name,phone,address} = await req.json();
+        const {name,phone,addresses} = await req.json();
         const accessToken = (await cookieStore).get("accessToken")?.value;
         if(!accessToken){
             return sendError("token not found",404)
@@ -28,7 +28,7 @@ export async function PUT(req:NextRequest){
                         phone   
                     },
                     $push:{
-                        addresses:address
+                        addresses:addresses
                     }
                 },
                 {new:true}
@@ -47,7 +47,7 @@ export async function PUT(req:NextRequest){
                         phone
                     },
                     $push:{
-                        addresses:address
+                        addresses:addresses
                     }
                 },
                 {new:true}

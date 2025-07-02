@@ -13,7 +13,7 @@ export async function GET(){
     try {
         const cookieStore = cookies();
         const accessToken = (await cookieStore).get("accessToken")?.value;
-        if(!accessToken){
+        if(!accessToken){ 
             return sendError("token not found",404)
         }
         const decodedToken: RefreshToken= jwt.verify(accessToken as string, process.env.ACCESS_TOKEN_SECRET as string);    //?
