@@ -33,7 +33,9 @@ export interface Order extends Document{
     orderStatus:'placed'| 'processing'|  'shipped'| 'delivered'| 'cancelled';
     deliveryAgent:Types.ObjectId;
     totalAmount:number;
-    otp:string
+    otp:string;
+    createdAt?: Date;
+    updatedAt?: Date;
 };
 
 export const orderSchema: Schema<Order> = new Schema({

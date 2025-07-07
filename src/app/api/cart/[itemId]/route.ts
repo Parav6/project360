@@ -25,11 +25,11 @@ export async function PUT(req:NextRequest,{params}:{params:{itemId:string}}){
         if(!cart){
             return sendError("cart not found",404)
         };
-        const productInCart = cart.items.find((item)=>item.product.equals(itemId));
+        const productInCart = cart.items.find((item)=>item._id.equals(itemId));
         if(!productInCart){
             return sendError("product in cart not found",404)
         };
-        productInCart.quantity = quantity;
+        productInCart.quantity += quantity;
         await cart.save();
         return sendSuccess(cart,"cart updated and product updated in cart");
     } catch (error) {
@@ -56,13 +56,13 @@ export async function DELETE(req:NextRequest,{params}:{params:{itemId:string}}){
         if(!cart){
             return sendError("cart not found",404)
         };
-        const productInCart = cart.items.find((item)=>item.product.equals(itemId));
+        const productInCart = cart.items.find((item)=>item._id.equals(itemId));
         if(!productInCart){
             return sendError("product in cart not found",404)
         };
         // const id = productInCart._id;
         const updatedCart = await CartModel.findByIdAndUpdate(cart._id,{
-            $pull:{items:{product:itemId}}
+            $pull:{items:{_id:itemId}}
         },{new:true});
         if(!updatedCart){
             return sendError("unable to delete item from cart")

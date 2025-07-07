@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import useUserHook from "@/hooks/userHook";
 
 
@@ -10,35 +10,37 @@ import useUserHook from "@/hooks/userHook";
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { user, loading, error } = useUserHook();
-  console.log("user", user);
-  console.log("loading", loading);
-  console.log("error", error);
+  const [navLinks, setNavLinks] = useState([]);
+  
 
-  let navLinks = [];
 
-if(loading || error) {
-  navLinks = [
-    { name: "Shop", href: "/user/shop" },
-    { name: "Login", href: "/auth/sign-in" },
-    { name: "Sign Up", href: "/auth/sign-up", isButton: true },
-  ]
-}else if(user && user.role === "admin") {
-  navLinks = [
-    { name: "Admin Panel", href: "/admin/admin-panel" },
-    { name: "Profile", href: "/admin/profile", isButton: true },
-  ]
-}else if(user && user.role === "customer") {
-  navLinks = [
-    { name: "Shop", href: "/user/shop" },
-    { name: "Cart", href: "/user/cart" },
-    { name: "Profile", href: "/user/profile", isButton: true },
-  ]
-}else if(user && user.role === "employee") {
-  navLinks = [
-    { name: "Orders", href: "/employee/orders" },
-    { name: "Profile", href: "/employee/profile" },
-  ]
-}
+useEffect(() => {
+  let links = [];
+  if (loading || error) {
+    links = [
+      { name: "Shop", href: "/user/shop" },
+      { name: "Login", href: "/auth/sign-in" },
+      { name: "Sign Up", href: "/auth/sign-up", isButton: true },
+    ];
+  } else if (user && user.role === "admin") {
+    links = [
+      { name: "Admin Panel", href: "/admin/admin-panel" },
+      { name: "Profile", href: "/admin/profile", isButton: true },
+    ];
+  } else if (user && user.role === "customer") {
+    links = [
+      { name: "Shop", href: "/user/shop" },
+      { name: "Cart", href: "/user/cart" },
+      { name: "Profile", href: "/user/profile", isButton: true },
+    ];
+  } else if (user && user.role === "employee") {
+    links = [
+      { name: "Orders", href: "/employee/orders" },
+      { name: "Profile", href: "/employee/profile" },
+    ];
+  }
+  setNavLinks(links);
+}, [user, error, loading]);
 
   return (
     <nav className="w-full top-0 left-0 z-50 bg-[var(--color-bg)] shadow-md">

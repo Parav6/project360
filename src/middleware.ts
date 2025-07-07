@@ -63,7 +63,7 @@ export const config={
     matcher:[
         "/",
         "/about",
-        // "/auth/:path*",
+        "/auth/:path*",
         "/user/:path*",
         "/employee/:path*",
         "/admin/:path*"

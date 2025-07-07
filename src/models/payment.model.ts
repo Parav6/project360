@@ -16,15 +16,15 @@ export const paymentSchema : Schema<Payment> = new Schema({
     },
     razorpayOrderId:{
         type:String,
-        required:true
+        
     },
     razorpayPaymentId:{
         type:String,
-        required:true
+       
     },
     razorpaySignature:{
         type:String,
-        required:true
+       
     },
     status: { 
         type: String, 

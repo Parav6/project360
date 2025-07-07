@@ -22,7 +22,7 @@ export async function POST(req:NextRequest){
         orderId,
         status:"pending",
         amount:totalAmount
-       }); 
+       }).save(); 
 
        if(!paymentLog){
         return sendError("unable to store payment log in database")
@@ -37,9 +37,10 @@ export async function POST(req:NextRequest){
 
        const data = {
         order:order,
-        logId:paymentLog._id
+        logId:paymentLog._id,
+        orderId:orderId,
        }
-       
+       console.log(data)
        return sendSuccess(data,"order created in Razorpay")
     } catch (error) {
         console.log("unable to create order in razorpay",error);

@@ -42,6 +42,24 @@ const imageSchema = new Schema({
   }
 },{timestamps:true})
 
+
+export interface Rating extends Document{
+    _id:Types.ObjectId;
+    user:Types.ObjectId;
+    rating:number;
+    comment?:string;
+    createdAt?:Date;
+    updatedAt?:Date;
+};
+
+export interface Image extends Document{
+  _id:Types.ObjectId;
+  publicId:string;
+  url:string;
+  createdAt?:Date;
+  updatedAt?:Date;
+};
+
 export interface Products extends Document{
     _id:Types.ObjectId;
     name:string;

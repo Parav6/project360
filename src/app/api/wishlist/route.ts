@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 import CustomerModel from "@/models/customer.model";
+import ProductModel from "@/models/products.model";
 
 
 export async function POST(req:NextRequest){
@@ -61,7 +62,10 @@ export async function GET(){
         if(!customer){
             return sendError("unable to get customer",404)
         };
-        return sendSuccess(customer,"wishlist found!!!");
+        const wishlist = await ProductModel.find({
+            _id:{$in:customer.wishlist}
+        });
+        return sendSuccess(wishlist,"wishlist found!!!");
     } catch (error) {
         console.log("unable to get wishlist",error);
         return sendError("unable to get wishlist",500,error)

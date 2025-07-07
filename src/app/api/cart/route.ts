@@ -86,6 +86,19 @@ export async function GET(){
         if(!cart){
             return sendError("unable to find cart",404)
         };
+        const productId = cart.items.map((item)=>item.product);
+        const products = await ProductModel.find({_id:{$in:productId}}).select("name price images discount stock");
+
+        const data = cart.items.map((item)=>{
+            const product = products.find((p) => p._id.equals(item.product));
+            return {
+                ...item.toObject(),
+                product,
+            };
+        })
+
+        cart.items = data;
+
         return sendSuccess(cart,"get cart successful");
     } catch (error) {
         console.log("failed to get cart",error);

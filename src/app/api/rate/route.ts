@@ -10,6 +10,9 @@ export async function POST(req:NextRequest){
     dbConnect();
     try {
         const {comment,rating,productId} = await req.json();
+        if(!comment || !rating || !productId){
+            return sendError("comment, rating and productId are required",400);
+        }
         const cookieStore = cookies();
         const accessToken = (await cookieStore).get("accessToken")?.value;
         if(!accessToken){

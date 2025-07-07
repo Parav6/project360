@@ -124,7 +124,7 @@ export async function GET(req:NextRequest){
     try {
         const {searchParams} = new URL(req.url);
         const category = searchParams.get("category") || "";
-        const price = parseInt(searchParams.get("prize") || "0");
+        const price = parseInt(searchParams.get("price") || "0");
         // const $smartSearch = searchParams.get("smartSearch") || "";
         const page = parseInt(searchParams.get("page")||"1");
         const limit = parseInt(searchParams.get("limit") || "20");
@@ -137,13 +137,10 @@ export async function GET(req:NextRequest){
             //both
             filter = {
               $and:[
-                {$or:[
-                    { category: category },
-                    { price: { $lte: price } },
-                    {tags:category}
-                ]},
-              {isDeleted:false}]
-                
+                { $or: [ { category: category }, { tags: category } ] },
+                { price: { $lte: price } },
+                { isDeleted: false }
+              ]
             };
         }else if(category && !price){
             //category
