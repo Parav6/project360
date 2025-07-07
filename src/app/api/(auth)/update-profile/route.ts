@@ -25,11 +25,10 @@ export async function PUT(req:NextRequest){
                 {
                     $set:{                            
                         name,
-                        phone   
+                        phone,
+                        addresses,   
                     },
-                    $push:{
-                        addresses:addresses
-                    }
+                   
                 },
                 {new:true}
             );

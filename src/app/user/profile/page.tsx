@@ -27,9 +27,11 @@ export default function DynamicAddressProfile() {
   const [isEditing, setIsEditing] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { user, loading, error } = useUserHook();
+  const { user } = useUserHook();
 
   const router = useRouter();
+
+ 
 
   const dispatch = useAppDispatch();
 
@@ -79,7 +81,7 @@ export default function DynamicAddressProfile() {
   const handleLogOut = async () => {
     try {
       await axios.post("/api/sign-out");  
-        dispatch(deleteUser())
+        dispatch(deleteUser());
         router.push("/");
     } catch (error) {   
         console.error("Logout error:", error);

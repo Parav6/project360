@@ -13,30 +13,27 @@ const useUserHook = () => {
     const [loading, setLoading] = useState(!user);
     const [error, setError] = useState("");
 
-    useEffect(()=>{
-        const fetchUser = async () => {
-            try {
-                console.log("Fetching user data...");
-                const res = await axios.get('/api/me');
-                console.log(1)
-                console.log("user data", res.data.data);
-                console.log(1)
-                dispatch(addUser(res.data.data));
-            } catch (error) {
-                setError(`User fetch failed , ${error}`);
-            }finally{
-                setLoading(false);
-            }
-        };
+    const fetchUser = async () => {
+        setLoading(true);
+        try {
+            const res = await axios.get('/api/me');
+            dispatch(addUser(res.data.data));
+        } catch (error) {
+            setError(`User fetch failed , ${error}`);
+        } finally {
+            setLoading(false);
+        }
+    };
 
+    useEffect(() => {
         if (!user) {
             fetchUser();
         } else {
             setLoading(false);
         }
-    },[]);
+    }, []);
 
-    return { user, loading, error };
+    return { user, loading, error, refetch: fetchUser };
 };
 
 export default useUserHook;

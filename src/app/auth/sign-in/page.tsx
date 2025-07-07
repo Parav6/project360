@@ -8,6 +8,9 @@ import axios from "axios";
 import { useAppDispatch } from "@/lib/hooks";
 import { addUser } from "@/lib/features/project360/userSlice";
 import { useRouter } from "next/navigation";
+import useUserHook from "@/hooks/userHook";
+
+
 
 
 
@@ -25,6 +28,8 @@ export default function SignIn() {
     }
   });
 
+  const { refetch } = useUserHook();
+
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -33,6 +38,7 @@ export default function SignIn() {
       const res = await axios.post("/api/sign-in", data);
       dispatch(addUser(res.data.data)); 
       reset();
+      await refetch();
       router.push("/"); 
       
     } catch (error) {
