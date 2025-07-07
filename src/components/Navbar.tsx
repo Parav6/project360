@@ -10,64 +10,64 @@ import { useAppSelector } from "@/lib/hooks";
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
  
-  // const [navLinks, setNavLinks] = useState([]);
+  const [navLinks, setNavLinks] = useState([]);
 
-  //  const { user, loading, error } = useUserHook();
- const user = useAppSelector((state) => state.user.currentUser);
+   const { user, loading, error } = useUserHook();
+//  const user = useAppSelector((state) => state.user.currentUser);
 
-const navLinks = !user
-  ? [
-      { name: "Shop", href: "/user/shop" },
-      { name: "Login", href: "/auth/sign-in" },
-      { name: "Sign Up", href: "/auth/sign-up", isButton: true },
-    ]
-  : user.role === "admin"
-  ? [
-      { name: "Admin Panel", href: "/admin/admin-panel" },
-      { name: "Profile", href: "/admin/profile", isButton: true },
-    ]
-  : user.role === "customer"
-  ? [
-      { name: "Shop", href: "/user/shop" },
-      { name: "Cart", href: "/user/cart" },
-      { name: "Profile", href: "/user/profile", isButton: true },
-    ]
-  : user.role === "employee"
-  ? [
-      { name: "Orders", href: "/employee/orders" },
-      { name: "Profile", href: "/employee/profile" },
-    ]
-  : [];
-  
-
-
-// useEffect(() => {
-//   let links = [];
-//   if (loading || error) {
-//     links = [
+// const navLinks = !user
+//   ? [
 //       { name: "Shop", href: "/user/shop" },
 //       { name: "Login", href: "/auth/sign-in" },
 //       { name: "Sign Up", href: "/auth/sign-up", isButton: true },
-//     ];
-//   } else if (user && user.role === "admin") {
-//     links = [
+//     ]
+//   : user.role === "admin"
+//   ? [
 //       { name: "Admin Panel", href: "/admin/admin-panel" },
 //       { name: "Profile", href: "/admin/profile", isButton: true },
-//     ];
-//   } else if (user && user.role === "customer") {
-//     links = [
+//     ]
+//   : user.role === "customer"
+//   ? [
 //       { name: "Shop", href: "/user/shop" },
 //       { name: "Cart", href: "/user/cart" },
 //       { name: "Profile", href: "/user/profile", isButton: true },
-//     ];
-//   } else if (user && user.role === "employee") {
-//     links = [
+//     ]
+//   : user.role === "employee"
+//   ? [
 //       { name: "Orders", href: "/employee/orders" },
 //       { name: "Profile", href: "/employee/profile" },
-//     ];
-//   }
-//   setNavLinks(links);
-// }, [user, error, loading]);
+//     ]
+//   : [];
+  
+
+
+useEffect(() => {
+  let links = [];
+  if (loading || error) {
+    links = [
+      { name: "Shop", href: "/user/shop" },
+      { name: "Login", href: "/auth/sign-in" },
+      { name: "Sign Up", href: "/auth/sign-up", isButton: true },
+    ];
+  } else if (user && user.role === "admin") {
+    links = [
+      { name: "Admin Panel", href: "/admin/admin-panel" },
+      { name: "Profile", href: "/admin/profile", isButton: true },
+    ];
+  } else if (user && user.role === "customer") {
+    links = [
+      { name: "Shop", href: "/user/shop" },
+      { name: "Cart", href: "/user/cart" },
+      { name: "Profile", href: "/user/profile", isButton: true },
+    ];
+  } else if (user && user.role === "employee") {
+    links = [
+      { name: "Orders", href: "/employee/orders" },
+      { name: "Profile", href: "/employee/profile" },
+    ];
+  }
+  setNavLinks(links);
+}, [user, error, loading]);
 
   return (
     <nav className="w-full top-0 left-0 z-50 bg-[var(--color-bg)] shadow-md">
