@@ -5,70 +5,8 @@ import { useEffect, useState } from "react";
 import type {Order} from "@/models/orders.model";
 import axios from "axios";
 import { useAppSelector } from "@/lib/hooks";
+import socket from "@/lib/socket";
 
-// Simulated data structures
-// type Address = {
-//   street: string;
-//   city: string;
-//   state: string;
-//   postalCode: string;
-//   country: string;
-// };
-
-// type Order = {
-//   _id: string;
-//   createdAt: string;
-//   deliveredAt?: string;
-//   totalItems: number;
-//   status: "Placed" | "Processing" | "Shipped" | "Delivered";
-//   address: Address;
-// };
-
-// 🔁 Mock current + past orders
-// const mockCurrentOrder: Order | null = {
-//   _id: "orderLive123",
-//   createdAt: "2025-07-02T10:00:00Z",
-//   totalItems: 3,
-//   status: "Shipped",
-//   address: {
-//     street: "42 MG Road",
-//     city: "Pune",
-//     state: "Maharashtra",
-//     postalCode: "411001",
-//     country: "India",
-//   },
-// };
-
-// const mockPastOrders: Order[] = [
-//   {
-//     _id: "order789",
-//     createdAt: "2025-06-30T12:00:00Z",
-//     deliveredAt: "2025-07-01T15:00:00Z",
-//     totalItems: 2,
-//     status: "Delivered",
-//     address: {
-//       street: "DLF Cyber City",
-//       city: "Gurgaon",
-//       state: "Haryana",
-//       postalCode: "122002",
-//       country: "India",
-//     },
-//   },
-//   {
-//     _id: "order654",
-//     createdAt: "2025-06-28T11:00:00Z",
-//     deliveredAt: "2025-06-29T17:30:00Z",
-//     totalItems: 4,
-//     status: "Delivered",
-//     address: {
-//       street: "Indira Nagar",
-//       city: "Lucknow",
-//       state: "UP",
-//       postalCode: "226016",
-//       country: "India",
-//     },
-//   },
-// ];
 
 export default function WorkerOrdersPage() {
   const [currentOrder, setCurrentOrder] = useState<Order | null>(null);
@@ -80,6 +18,30 @@ export default function WorkerOrdersPage() {
 
   useEffect(() => {
     const employeeId = user?._id;
+
+  
+
+    if(!employeeId) return;
+
+    //socket
+    
+
+      const onConnect = () => {
+    socket.emit("register-employee", employeeId);
+  };
+  socket.on("connect", onConnect);
+
+   if (socket.connected) {
+    socket.emit("register-employee", employeeId);
+  };
+
+ const onNewWork = (data) => {
+    alert(`New Order Assigned: ${data.orderId}`);
+    setCurrentOrder(data.orderDetail);
+  };
+  socket.on("new-work-assigned", onNewWork);
+
+
     const fetchData = async()=>{
     try {
       const res = await axios.get(`/api/employee/${employeeId}`);
@@ -94,6 +56,11 @@ export default function WorkerOrdersPage() {
     }
   };  
   fetchData();
+  
+  return () => {
+    socket.off("connect", onConnect);
+    socket.off("new-work-assigned", onNewWork);
+  };
   }, [user]);
 
   const handleSendOtp = async() => {

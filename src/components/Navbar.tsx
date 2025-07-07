@@ -4,40 +4,19 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState,useEffect } from "react";
 import useUserHook from "@/hooks/userHook";
-import { useAppSelector } from "@/lib/hooks";
+
 
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
- 
+ const { user, loading, error } = useUserHook();
+  console.log("user", user);
+  console.log("loading", loading);
+  console.log("error", error);
   const [navLinks, setNavLinks] = useState([]);
 
-   const { user, loading, error } = useUserHook();
-//  const user = useAppSelector((state) => state.user.currentUser);
+   
 
-// const navLinks = !user
-//   ? [
-//       { name: "Shop", href: "/user/shop" },
-//       { name: "Login", href: "/auth/sign-in" },
-//       { name: "Sign Up", href: "/auth/sign-up", isButton: true },
-//     ]
-//   : user.role === "admin"
-//   ? [
-//       { name: "Admin Panel", href: "/admin/admin-panel" },
-//       { name: "Profile", href: "/admin/profile", isButton: true },
-//     ]
-//   : user.role === "customer"
-//   ? [
-//       { name: "Shop", href: "/user/shop" },
-//       { name: "Cart", href: "/user/cart" },
-//       { name: "Profile", href: "/user/profile", isButton: true },
-//     ]
-//   : user.role === "employee"
-//   ? [
-//       { name: "Orders", href: "/employee/orders" },
-//       { name: "Profile", href: "/employee/profile" },
-//     ]
-//   : [];
   
 
 
