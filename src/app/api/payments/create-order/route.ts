@@ -13,7 +13,7 @@ export async function POST(req:NextRequest){
         };
 
         const options= {
-           amount: (totalAmount*100),
+           amount: Math.round(totalAmount * 100),
            currency: "INR",
            receipt: `receipt_order_${Date.now()}`,
        };

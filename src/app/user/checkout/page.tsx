@@ -102,6 +102,7 @@ export default function CheckoutPage() {
 
     try {
       const res = await axios.post("/api/order", { items, totalAmount, address });
+      
       console.log("order created******************************")
        // Razorpay integration would go here
     const dataForOrderCreation = {
@@ -115,7 +116,7 @@ export default function CheckoutPage() {
 
     const options = {
       key: process.env.NEXT_PUBLIC_RAZORPAY_API_KEY, 
-      amount: totalAmount*100, 
+      amount: Math.round(totalAmount * 100), 
       currency: "INR",
       name: "Clothes Store",
       description: "Order Payment",
@@ -147,7 +148,17 @@ export default function CheckoutPage() {
 
 
     } catch (error) {
-      console.log("Payment failed:", error);
+      console.log("Payment failed:", error.response.data.errors.itemsOutOfStock);
+      console.log(error.status)
+      if(error.status==408){
+        const errData = error.response.data.errors.itemsOutOfStock;
+        const alertMessages = errData.map((data)=>{
+          return `the updated stock of product ${data.item.product} is ${data.originalStock}`
+        })
+        alert(alertMessages.join('\n'));
+        setLoading(false);
+        return;
+      }
     }
 
     

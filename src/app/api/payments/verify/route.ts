@@ -9,6 +9,7 @@ import { cookies } from "next/headers";
 import CustomerModel from "@/models/customer.model";
 import jwt from "jsonwebtoken"
 import { orderQueue } from "@/lib/queues/orderQueue";
+import ProductModel from "@/models/products.model";
 
 
 export async function POST(req:NextRequest){
@@ -93,6 +94,24 @@ export async function POST(req:NextRequest){
         const deletedCart = await CartModel.deleteOne({user:customerId});
         if(!deletedCart){
             return sendError("unable to delete cart",403)
+        };
+
+        //reduce the stock of products according to order
+        const updatedProducts = await Promise.all(
+            updatedOrder.products.map(async(product)=>{
+                const updatedProduct = await ProductModel.findByIdAndUpdate(product.product,{
+                    $inc:{stock:-product.quantity}
+                },{new:true})
+                return updatedProduct
+            })
+        );
+
+        if (updatedProducts.some(p => !p)) {
+            return sendError("One or more products could not be updated (possibly out of stock)", 408);
+        }
+
+        if(updatedOrder.products.length!=updatedProducts.length){
+            return sendError("product stock did not change",408)
         };
 
         //* add work to queue 

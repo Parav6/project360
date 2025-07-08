@@ -2,9 +2,10 @@ import { sendError, sendSuccess } from "@/helpers/sendResponse";
 import dbConnect from "@/lib/dbConnect";
 import CustomerModel from "@/models/customer.model";
 import { cookies } from "next/headers";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import OrderModel from "@/models/orders.model";
+import ProductModel from "@/models/products.model";
 // import { orderQueue } from "@/lib/queues/orderQueue";
 
 
@@ -27,6 +28,26 @@ export async function POST(req:NextRequest){
         if(!customer){
             return sendError("unable to get customer",404)
         };
+
+        const stockChecks = await Promise.all(
+          items.map(async (item) => {
+            const itemFromStock = await ProductModel.findById(item.product);
+            return {
+              item,
+              outOfStock: item.quantity > itemFromStock.stock,
+              originalStock: itemFromStock.stock
+            };
+          })
+        );
+        const itemsOutOfStock = stockChecks
+          .filter((check) => check.outOfStock)
+
+        if(itemsOutOfStock.length!=0){
+            // return NextResponse.json(itemsOutOfStock,{status:408})
+             return sendError("Some items are out of stock", 408, { itemsOutOfStock });
+        }  
+
+
         const order = new OrderModel({
             user:customerId,
             products:items,
