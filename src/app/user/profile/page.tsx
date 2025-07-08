@@ -90,19 +90,19 @@ export default function DynamicAddressProfile() {
 
   return (
     <div className="max-w-4xl mx-auto mt-10 px-4">
-      <h2 className="text-2xl font-bold mb-6 text-center">Customer Profile</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center text-[var(--color-text-primary)]">Customer Profile</h2>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="bg-white shadow-md p-6 rounded-lg space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="bg-[var(--color-bg-light)] shadow-md p-6 rounded-[1.5rem] space-y-6 border border-[var(--color-border)]">
         {/* Header */}
         <div className="flex justify-between items-center">
-          <h3 className="text-lg font-semibold">Profile & Addresses</h3>
+          <h3 className="text-lg font-semibold text-[var(--color-text-primary)]">Profile & Addresses</h3>
 
           <div className="flex gap-2">
             {!isEditing && (
               <button
                 type="button"
                 onClick={() => setIsEditing(true)}
-                className="text-sm bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700"
+                className="text-sm bg-[var(--color-accent-blue)] text-[var(--color-text-primary)] px-4 py-1 rounded-full hover:bg-[var(--color-accent-yellow)] font-bold"
               >
                 Edit
               </button>
@@ -110,7 +110,7 @@ export default function DynamicAddressProfile() {
             {isEditing && (
               <button
                 type="submit"
-                className="text-sm bg-black text-white px-4 py-1 rounded hover:bg-gray-800"
+                className="text-sm bg-[var(--color-accent-pink)] text-[var(--color-text-primary)] px-4 py-1 rounded-full hover:bg-[var(--color-accent-yellow)] font-bold"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Saving..." : "Save Changes"}
@@ -122,24 +122,24 @@ export default function DynamicAddressProfile() {
         {/* Profile Info */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5 ">
           <div>
-            <label className="block text-sm font-medium">Name</label>
+            <label className="block text-sm font-medium text-[var(--color-text-primary)] mb-2">Name</label>
             <input
               {...register("name", { required: "Name is required" })}
               disabled={!isEditing}
-              className="input"
+              className="w-full px-4 py-3 border border-[var(--color-border)] rounded-full bg-[var(--color-bg-light)] text-[var(--color-text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-pink)] transition-all"
             />
             {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium">Phone</label>
+            <label className="block text-sm font-medium text-[var(--color-text-primary)] mb-2">Phone</label>
             <input
               {...register("phone", {
                 required: "Phone is required",
                 pattern: { value: /^\+\d{10,15}$/, message: "Invalid phone number" },
               })}
               disabled={!isEditing}
-              className="input"
+              className="w-full px-4 py-3 border border-[var(--color-border)] rounded-full bg-[var(--color-bg-light)] text-[var(--color-text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-pink)] transition-all"
             />
             {errors.phone && <p className="text-red-500 text-sm">{errors.phone.message}</p>}
           </div>
@@ -148,8 +148,8 @@ export default function DynamicAddressProfile() {
         {/* Addresses List */}
         <div className="space-y-8">
           {fields.map((field, index) => (
-            <div key={field.id} className="bg-gray-50 border p-4 rounded-md relative">
-              <h4 className="font-medium mb-3">Address #{index + 1}</h4>
+            <div key={field.id} className="bg-[var(--color-bg-muted)] border border-[var(--color-border)] p-4 rounded-[1.5rem] relative">
+              <h4 className="font-medium mb-3 text-[var(--color-text-primary)]">Address #{index + 1}</h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
                   { label: "Label", key: "label" },
@@ -160,13 +160,13 @@ export default function DynamicAddressProfile() {
                   { label: "Country", key: "country" },
                 ].map((fieldInfo) => (
                   <div key={fieldInfo.key}>
-                    <label className="block text-sm font-medium">{fieldInfo.label}</label>
+                    <label className="block text-sm font-medium text-[var(--color-text-primary)] mb-2">{fieldInfo.label}</label>
                     <input
                       {...register(`addresses.${index}.${fieldInfo.key}` as const, {
                         required: `${fieldInfo.label} is required`,
                       })}
                       disabled={!isEditing}
-                      className="input"
+                      className="w-full px-4 py-3 border border-[var(--color-border)] rounded-full bg-[var(--color-bg-light)] text-[var(--color-text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-pink)] transition-all"
                     />
                     {errors?.addresses?.[index]?.[fieldInfo.key as keyof Address] && (
                       <p className="text-red-500 text-sm">

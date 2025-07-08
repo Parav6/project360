@@ -83,39 +83,39 @@ export default function MyOrdersPage() {
   if (loading) {
     return (
       <div className="max-w-5xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6">My Orders</h1>
-        <p className="text-gray-600">Loading orders...</p>
+        <h1 className="text-3xl font-bold mb-6 text-[var(--color-text-primary)]">My Orders</h1>
+        <p className="text-[var(--color-text-muted)]">Loading orders...</p>
       </div>
     );
   }
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">My Orders</h1>
+      <h1 className="text-3xl font-bold mb-6 text-[var(--color-text-primary)]">My Orders</h1>
 
       {orders.length === 0 ? (
-        <p className="text-gray-600">You have not placed any orders yet.</p>
+        <p className="text-[var(--color-text-muted)]">You have not placed any orders yet.</p>
       ) : (
         <div className="space-y-4">
           {orders.map((order) => (
             <Link
               href={`/user/orders/${order._id}`}
               key={order._id}
-              className="block border rounded-lg shadow hover:shadow-md transition p-4 bg-white"
+              className="block border border-[var(--color-border)] rounded-[2rem] shadow hover:shadow-lg transition p-4 bg-[var(--color-bg-light)]"
             >
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
                 {/* Order Info */}
                 <div className="mb-2 sm:mb-0">
-                  <p className="text-lg font-semibold">Order ID: {order._id}</p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-lg font-semibold text-[var(--color-text-primary)]">Order ID: {order._id}</p>
+                  <p className="text-sm text-[var(--color-text-secondary)]">
                     Placed on {new Date(order.createdAt)?.toLocaleDateString()}
                   </p>
                 </div>
 
                 {/* Summary Info */}
-                <div className="flex flex-wrap gap-4 text-sm sm:text-base text-gray-700 items-center">
-                  <span>🛒 {order.products.length} items</span>
-                  <span>💵 ₹{order.totalAmount}</span>
+                <div className="flex flex-wrap gap-4 text-sm sm:text-base text-[var(--color-text-secondary)] items-center">
+                  <span> 6d2 {order.products.length} items</span>
+                  <span> 4b5 9{order.totalAmount}</span>
                   <span
                     className={`px-3 py-1 text-white text-xs font-semibold rounded-full ${getStatusBadgeColor(
                       order.orderStatus

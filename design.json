@@ -1,0 +1,197 @@
+{
+    "theme": {
+      "borderRadius": "1.5rem",
+      "fontFamily": "Inter, sans-serif",
+      "fontWeight": {
+        "regular": 400,
+        "medium": 500,
+        "bold": 700
+      },
+      "colors": {
+        "background": {
+          "default": "#FCFCF7",
+          "light": "#FFFFFF",
+          "muted": "#F7F7F0"
+        },
+        "accent": {
+          "pink": "#FFADAD",
+          "yellow": "#FDFD96",
+          "purple": "#BDB2FF",
+          "green": "#B5EAD7",
+          "blue": "#C0FDFF",
+          "peach": "#FFD6A5"
+        },
+        "text": {
+          "primary": "#222222",
+          "secondary": "#666666",
+          "muted": "#999999"
+        },
+        "button": {
+          "primaryBg": "#FFADAD",
+          "primaryText": "#222222",
+          "hoverBg": "#FF8888"
+        },
+        "border": "#DADADA"
+      },
+      "shadows": {
+        "default": "0 2px 8px rgba(0, 0, 0, 0.08)"
+      },
+      "transitions": {
+        "default": "all 0.2s ease-in-out"
+      }
+    },
+    "layout": {
+      "containerPadding": "1rem",
+      "contentMaxWidth": "1280px",
+      "sectionSpacing": "4rem"
+    },
+    "components": {
+      "navbar": {
+        "position": "fixed",
+        "background": "#F3F0FF",
+        "height": "4rem",
+        "borderRadius": "2rem",
+        "padding": "0 2rem",
+        "items": {
+          "alignment": "centered",
+          "spacing": "2rem",
+          "hoverEffect": {
+            "scale": "1.05",
+            "colorSwap": true
+          }
+        }
+      },
+      "hero": {
+        "type": "image-overlay",
+        "layout": "leftTextRightImage",
+        "textBox": {
+          "background": "#FEF9D7",
+          "borderRadius": "1rem",
+          "padding": "1.5rem",
+          "button": {
+            "label": "Shop Now",
+            "style": "filled",
+            "color": "#FFADAD"
+          }
+        }
+      },
+      "card": {
+        "type": "product",
+        "style": "vertical",
+        "borderRadius": "2rem",
+        "shadow": true,
+        "imageRatio": "1:1",
+        "hoverEffect": "scale",
+        "labelPosition": "bottom",
+        "colors": {
+          "backgroundVariants": [
+            "#C0FDFF",
+            "#FFD6A5",
+            "#FDFD96",
+            "#B5EAD7",
+            "#FFADAD",
+            "#BDB2FF"
+          ]
+        }
+      },
+      "aboutSection": {
+        "layout": "centered",
+        "shape": "oval",
+        "background": "#FDFD96",
+        "illustrations": "hand-drawn style",
+        "text": {
+          "alignment": "center",
+          "headingSize": "xl",
+          "paragraphSize": "md"
+        },
+        "button": {
+          "label": "About Us",
+          "style": "filled",
+          "color": "#FFADAD"
+        }
+      },
+      "productDetail": {
+        "layout": "side-by-side",
+        "background": "#FFFBEF",
+        "infoTabs": ["What It Is", "How To Use", "Ingredients"],
+        "addToCart": {
+          "style": "filled",
+          "color": "#FDFD96",
+          "fontWeight": "bold"
+        }
+      },
+      "auth": {
+        "formFields": ["First Name", "Last Name", "Email", "Password"],
+        "inputStyle": {
+          "border": "1px solid #999",
+          "padding": "0.75rem",
+          "borderRadius": "9999px"
+        },
+        "button": {
+          "color": "#FFADAD",
+          "label": "Create",
+          "style": "rounded-full"
+        }
+      },
+      "checkout": {
+        "layout": "2-column",
+        "paymentOptions": ["PayPal", "ShopPay"],
+        "summaryBox": {
+          "background": "#FFFFFF",
+          "borderRadius": "1rem",
+          "fontSize": "md",
+          "itemSummary": true
+        }
+      }
+    },
+    "illustration": {
+      "style": "hand-drawn",
+      "elements": ["cats", "clouds", "birds", "trees"],
+      "usage": "used as background or accent throughout the site"
+    },
+    "typography": {
+      "headings": {
+        "fontSize": {
+          "h1": "2.25rem",
+          "h2": "1.75rem",
+          "h3": "1.5rem"
+        },
+        "fontWeight": "700"
+      },
+      "body": {
+        "fontSize": "1rem",
+        "lineHeight": "1.5",
+        "color": "#333"
+      },
+      "button": {
+        "fontWeight": "600",
+        "textTransform": "uppercase"
+      }
+    },
+    "icons": {
+      "style": "minimal line icons",
+      "usage": {
+        "search": "top right",
+        "user": "top right",
+        "cart": "top right with badge"
+      }
+    },
+    "interactions": {
+      "hover": {
+        "buttons": {
+          "scale": 1.05,
+          "backgroundSwap": true
+        },
+        "cards": {
+          "shadow": "increase",
+          "scale": 1.03
+        }
+      },
+      "focus": {
+        "inputs": {
+          "outline": "1px solid #FFADAD"
+        }
+      }
+    }
+  }
+  

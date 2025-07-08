@@ -170,23 +170,23 @@ export default function CheckoutPage() {
     return (
       <div className="max-w-5xl mx-auto px-4 py-8">
         <Script type="text/javascript" src="https://checkout.razorpay.com/v1/checkout.js" />
-        <h1 className="text-3xl font-bold mb-6">Checkout</h1>
-        <p className="text-gray-500">Loading user and address information...</p>
+        <h1 className="text-3xl font-bold mb-6 text-[var(--color-text-primary)]">Checkout</h1>
+        <p className="text-[var(--color-text-muted)]">Loading user and address information...</p>
       </div>
     );
   }
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Checkout</h1>
+      <h1 className="text-3xl font-bold mb-6 text-[var(--color-text-primary)]">Checkout</h1>
 
       {/* User Info */}
-      <section className="mb-8 bg-white border rounded shadow p-6">
+      <section className="mb-8 bg-[var(--color-bg-light)] border border-[var(--color-border)] rounded-[1.5rem] shadow p-6">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Contact Information</h2>
+          <h2 className="text-xl font-semibold text-[var(--color-text-primary)]">Contact Information</h2>
           <button
             onClick={() => setIsEditingUser((prev) => !prev)}
-            className="text-blue-600 text-sm hover:underline"
+            className="text-[var(--color-accent-pink)] text-sm hover:underline font-bold"
           >
             {isEditingUser ? "Cancel" : "Edit"}
           </button>
